@@ -19,10 +19,13 @@ import org.jetbrains.compose.resources.painterResource
 import tu_monedita.shared.generated.resources.Res
 import tu_monedita.shared.generated.resources.compose_multiplatform
 
+import com.example.tu_monedita.com.example.tu_monedita.core.designsystem.theme.TuMoneditaTheme
+
+
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    TuMoneditaTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier
