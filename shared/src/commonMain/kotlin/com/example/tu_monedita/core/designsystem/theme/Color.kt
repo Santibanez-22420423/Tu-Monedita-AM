@@ -1,16 +1,23 @@
-package com.example.tu_monedita.com.example.tu_monedita.core.designsystem.theme
+package com.example.tu_monedita.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
-val PrimaryGreen = Color(0xFF2E7D5B)
-val DarkGreen = Color(0xFF174D38)
-val LightGreen = Color(0xFFE5F3EA)
+/**
+ * Defines the base color palette used throughout the application.
+ *
+ * These colors represent the visual identity of Tu Monedita and should be reused
+ * across all features.
+ * */
 
-val BackgroundLight = Color(0xFFF8FAF8)
-val SurfaceLight = Color(0xFFFFFFFF)
+// Brand colors.
+val MoneditaPrimary = Color(0xFF003B86)
+val MoneditaAccent = Color(0xFFC5992E)
 
-val TextPrimary = Color(0xFF1F2933)
-val TextSecondary = Color(0xFF64748B)
+// Background colors.
+val MoneditaBackground = Color(0xFFE3DFDF)
 
-val IncomeGreen = Color(0xFF219653)
-val ExpenseRed = Color(0xFFE05252)
+// Text colors.
+val MoneditaTextPrimary = Color(0xFF000000)
+
+// Neutral colors.
+val MoneditaWhite = Color(0xFFFFFFFF)
