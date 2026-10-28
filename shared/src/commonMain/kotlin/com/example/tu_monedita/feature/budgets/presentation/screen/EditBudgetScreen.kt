@@ -17,13 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.MaterialTheme
+import com.example.tu_monedita.core.designsystem.theme.*
 
-private val PrimaryBlue = Color(0xFF003882)
-private val RedExpense = Color(0xFFA81919)
-private val TextPrimary = Color(0xFF1E293B)
-private val TextSecondary = Color(0xFF64748B)
-private val BorderGray = Color(0xFFE2E8F0)
-private val OrangeFood = Color(0xFFF97316)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +59,7 @@ fun edit_Budgets(
                         text = "Editar presupuesto",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 navigationIcon = {
@@ -71,7 +67,7 @@ fun edit_Budgets(
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver",
-                            tint = TextPrimary
+                            tint = MoneditaTextStrong
                         )
                     }
                 },
@@ -94,7 +90,7 @@ fun edit_Budgets(
                 text = "Categoría",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
@@ -113,7 +109,7 @@ fun edit_Budgets(
                             modifier = Modifier
                                 .size(32.dp)
                                 .clip(CircleShape)
-                                .background(OrangeFood),
+                                .background(MoneditaFood),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
@@ -129,8 +125,8 @@ fun edit_Budgets(
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = BorderGray,
-                        unfocusedBorderColor = BorderGray,
+                        focusedBorderColor = MoneditaBorderGray,
+                        unfocusedBorderColor = MoneditaBorderGray,
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White
                     )
@@ -158,7 +154,7 @@ fun edit_Budgets(
                 text = "Límite mensual",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -170,14 +166,14 @@ fun edit_Budgets(
                         text = "$",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PrimaryBlue,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaPrimary,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -191,7 +187,7 @@ fun edit_Budgets(
                 text = "Mes",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
@@ -210,8 +206,8 @@ fun edit_Budgets(
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = BorderGray,
-                        unfocusedBorderColor = BorderGray,
+                        focusedBorderColor = MoneditaBorderGray,
+                        unfocusedBorderColor = MoneditaBorderGray,
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White
                     )
@@ -239,7 +235,7 @@ fun edit_Budgets(
                 text = "Año",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
@@ -258,8 +254,8 @@ fun edit_Budgets(
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = BorderGray,
-                        unfocusedBorderColor = BorderGray,
+                        focusedBorderColor = MoneditaBorderGray,
+                        unfocusedBorderColor = MoneditaBorderGray,
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White
                     )
@@ -293,7 +289,7 @@ fun edit_Budgets(
                     .offset(y = (-150).dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryBlue
+                    containerColor = MoneditaPrimary
                 )
             ) {
                 Text(
@@ -314,7 +310,7 @@ fun edit_Budgets(
                     .offset(y = (-150).dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = RedExpense
+                    contentColor = MoneditaExpenseRed
                 )
             ) {
                 Icon(

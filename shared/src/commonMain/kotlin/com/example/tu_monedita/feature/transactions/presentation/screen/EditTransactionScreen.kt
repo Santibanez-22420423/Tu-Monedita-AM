@@ -18,14 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tu_monedita.core.designsystem.theme.*
 
-private val PrimaryBlue = Color(0xFF003882)
-private val GreenIncome = Color(0xFF16A34A)
-private val RedExpense = Color(0xFFA81919)
-private val LightGrayBg = Color(0xFFF1F5F9)
-private val TextPrimary = Color(0xFF1E293B)
-private val TextSecondary = Color(0xFF64748B)
-private val BorderGray = Color(0xFFE2E8F0)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +53,7 @@ fun edit_Transaction(
                         text = "Editar movimiento",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 navigationIcon = {
@@ -67,7 +61,7 @@ fun edit_Transaction(
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver",
-                            tint = TextPrimary
+                            tint = MoneditaTextStrong
                         )
                     }
                 },
@@ -90,14 +84,14 @@ fun edit_Transaction(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(28.dp))
-                    .background(LightGrayBg)
+                    .background(MoneditaLightGrayCard)
                     .padding(4.dp)
             ) {
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(24.dp))
-                        .background(if (isIncome) GreenIncome else Color.Transparent)
+                        .background(if (isIncome) MoneditaAvailableGreen else Color.Transparent)
                         .clickable {
                             isIncome = true
                             selectedCategory = "Salario"
@@ -107,7 +101,7 @@ fun edit_Transaction(
                 ) {
                     Text(
                         text = "Ingreso",
-                        color = if (isIncome) Color.White else TextSecondary,
+                        color = if (isIncome) Color.White else MoneditaTextSecondary,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 15.sp
                     )
@@ -116,7 +110,7 @@ fun edit_Transaction(
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(24.dp))
-                        .background(if (!isIncome) RedExpense else Color.Transparent)
+                        .background(if (!isIncome) MoneditaExpenseRed else Color.Transparent)
                         .clickable {
                             isIncome = false
                             selectedCategory = "Comida"
@@ -126,7 +120,7 @@ fun edit_Transaction(
                 ) {
                     Text(
                         text = "Gasto",
-                        color = if (!isIncome) Color.White else TextSecondary,
+                        color = if (!isIncome) Color.White else MoneditaTextSecondary,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 15.sp
                     )
@@ -140,7 +134,7 @@ fun edit_Transaction(
                 text = "Categoría",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
@@ -159,7 +153,7 @@ fun edit_Transaction(
                             modifier = Modifier
                                 .size(32.dp)
                                 .clip(CircleShape)
-                                .background(if (isIncome) GreenIncome else RedExpense),
+                                .background(if (isIncome) MoneditaAvailableGreen else MoneditaExpenseRed),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
@@ -175,8 +169,8 @@ fun edit_Transaction(
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = BorderGray,
-                        unfocusedBorderColor = BorderGray,
+                        focusedBorderColor = MoneditaBorderGray,
+                        unfocusedBorderColor = MoneditaBorderGray,
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White
                     )
@@ -204,7 +198,7 @@ fun edit_Transaction(
                 text = "Monto",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -216,14 +210,14 @@ fun edit_Transaction(
                         text = "$",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PrimaryBlue,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaPrimary,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -237,7 +231,7 @@ fun edit_Transaction(
                 text = "Descripción (opcional)",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -246,8 +240,8 @@ fun edit_Transaction(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PrimaryBlue,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaPrimary,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -261,7 +255,7 @@ fun edit_Transaction(
                 text = "Fecha",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -275,14 +269,14 @@ fun edit_Transaction(
                     Icon(
                         Icons.Default.CalendarToday,
                         contentDescription = null,
-                        tint = TextSecondary,
+                        tint = MoneditaTextSecondary,
                         modifier = Modifier.size(20.dp)
                     )
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = BorderGray,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaBorderGray,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -309,7 +303,7 @@ fun edit_Transaction(
                 ,
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryBlue
+                    containerColor = MoneditaPrimary
                 )
             ) {
                 Text(
@@ -330,7 +324,7 @@ fun edit_Transaction(
                     .offset(y = (-130).dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = RedExpense
+                    contentColor = MoneditaExpenseRed
                 ),
                 border = ButtonDefaults.outlinedButtonBorder.copy(
                     width = 1.dp

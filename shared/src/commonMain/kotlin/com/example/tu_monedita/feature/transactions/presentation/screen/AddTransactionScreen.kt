@@ -19,15 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tu_monedita.core.designsystem.theme.*
 
-private val PrimaryBlue = Color(0xFF003882)
-private val GreenIncome = Color(0xFF16A34A)
-private val LightGreenBg = Color(0xFFDCFCE7)
-private val LightGrayBg = Color(0xFFF1F5F9)
-private val TextPrimary = Color(0xFF1E293B)
-private val TextSecondary = Color(0xFF64748B)
-private val BorderGray = Color(0xFFE2E8F0)
-private val BackgrounColor = Color(0xFFE3DFDF)
 
 
 
@@ -55,7 +48,7 @@ fun  create_Transaction(
                         text = "Nuevo movimiento",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 navigationIcon = {
@@ -63,7 +56,7 @@ fun  create_Transaction(
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver",
-                            tint = TextPrimary
+                            tint = MoneditaTextStrong
                         )
                     }
                 },
@@ -86,7 +79,7 @@ fun  create_Transaction(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(28.dp))
-                    .background(LightGrayBg)
+                    .background(MoneditaSearchBackground)
                     .padding(4.dp),
                 horizontalArrangement = Arrangement.spacedBy(0.dp)
             ) {
@@ -94,14 +87,14 @@ fun  create_Transaction(
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(24.dp))
-                        .background(if (isIncome) GreenIncome else Color.Transparent)
+                        .background(if (isIncome) MoneditaAvailableGreen else Color.Transparent)
                         .clickable { isIncome = true }
                         .padding(vertical = 12.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "Ingreso",
-                        color = if (isIncome) Color.White else TextSecondary,
+                        color = if (isIncome) Color.White else MoneditaTextSecondary,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 15.sp
                     )
@@ -117,7 +110,7 @@ fun  create_Transaction(
                 ) {
                     Text(
                         text = "Gasto",
-                        color = if (!isIncome) Color.White else TextSecondary,
+                        color = if (!isIncome) Color.White else MoneditaTextSecondary,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 15.sp
                     )
@@ -131,7 +124,7 @@ fun  create_Transaction(
                 text = "Categoría",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
@@ -150,7 +143,7 @@ fun  create_Transaction(
                             modifier = Modifier
                                 .size(32.dp)
                                 .clip(CircleShape)
-                                .background(if (isIncome) GreenIncome else Color(0xFFDC2626)),
+                                .background(if (isIncome) MoneditaAvailableGreen else Color(0xFFDC2626)),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
@@ -166,8 +159,8 @@ fun  create_Transaction(
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = BorderGray,
-                        unfocusedBorderColor = BorderGray,
+                        focusedBorderColor = MoneditaBorderGray,
+                        unfocusedBorderColor = MoneditaBorderGray,
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White
                     )
@@ -195,7 +188,7 @@ fun  create_Transaction(
                 text = "Monto",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -203,21 +196,21 @@ fun  create_Transaction(
                 onValueChange = { amount = it },
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = {
-                    Text("0.00", color = TextSecondary)
+                    Text("0.00", color = MoneditaTextSecondary)
                 },
                 leadingIcon = {
                     Text(
                         text = "$",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PrimaryBlue,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaPrimary,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -231,7 +224,7 @@ fun  create_Transaction(
                 text = "Descripción (opcional)",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -239,12 +232,12 @@ fun  create_Transaction(
                 onValueChange = { description = it },
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = {
-                    Text("Ej. Pago de trabajo", color = TextSecondary)
+                    Text("Ej. Pago de trabajo", color = MoneditaTextSecondary)
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PrimaryBlue,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaPrimary,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -258,7 +251,7 @@ fun  create_Transaction(
                 text = "Fecha",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -272,14 +265,14 @@ fun  create_Transaction(
                     Icon(
                         Icons.Default.CalendarToday,
                         contentDescription = null,
-                        tint = TextSecondary,
+                        tint = MoneditaTextSecondary,
                         modifier = Modifier.size(20.dp)
                     )
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = BorderGray,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaBorderGray,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -306,7 +299,7 @@ fun  create_Transaction(
 
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryBlue
+                    containerColor = MoneditaPrimary
                 ),
                 contentPadding = PaddingValues(0.dp)
             ) {

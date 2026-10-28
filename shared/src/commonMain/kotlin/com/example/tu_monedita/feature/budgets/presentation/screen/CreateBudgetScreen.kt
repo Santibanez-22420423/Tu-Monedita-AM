@@ -17,14 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.MaterialTheme
+import com.example.tu_monedita.core.designsystem.theme.*
 
-private val PrimaryBlue = Color(0xFF003882)
-private val TextPrimary = Color(0xFF1E293B)
-private val TextSecondary = Color(0xFF64748B)
-private val BorderGray = Color(0xFFE2E8F0)
-private val OrangeFood = Color(0xFFF97316)
-private val InfoBg = Color(0xFFEFF6FF)
-private val InfoBlue = Color(0xFF3B82F6)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +54,7 @@ fun create_Budgets(
                         text = "Crear presupuesto",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 navigationIcon = {
@@ -67,7 +62,7 @@ fun create_Budgets(
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver",
-                            tint = TextPrimary
+                            tint = MoneditaTextStrong
                         )
                     }
                 },
@@ -90,7 +85,7 @@ fun create_Budgets(
                 text = "Categoría",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
@@ -109,7 +104,7 @@ fun create_Budgets(
                             modifier = Modifier
                                 .size(32.dp)
                                 .clip(CircleShape)
-                                .background(OrangeFood),
+                                .background(MoneditaFood),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
@@ -125,8 +120,8 @@ fun create_Budgets(
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = BorderGray,
-                        unfocusedBorderColor = BorderGray,
+                        focusedBorderColor = MoneditaBorderGray,
+                        unfocusedBorderColor = MoneditaBorderGray,
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White
                     )
@@ -154,7 +149,7 @@ fun create_Budgets(
                 text = "Límite mensual",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -166,14 +161,14 @@ fun create_Budgets(
                         text = "$",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PrimaryBlue,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaPrimary,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -187,7 +182,7 @@ fun create_Budgets(
                 text = "Mes",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
@@ -206,8 +201,8 @@ fun create_Budgets(
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = BorderGray,
-                        unfocusedBorderColor = BorderGray,
+                        focusedBorderColor = MoneditaBorderGray,
+                        unfocusedBorderColor = MoneditaBorderGray,
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White
                     )
@@ -235,7 +230,7 @@ fun create_Budgets(
                 text = "Año",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
@@ -254,8 +249,8 @@ fun create_Budgets(
                     },
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = BorderGray,
-                        unfocusedBorderColor = BorderGray,
+                        focusedBorderColor = MoneditaBorderGray,
+                        unfocusedBorderColor = MoneditaBorderGray,
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White
                     )
@@ -282,7 +277,7 @@ fun create_Budgets(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(containerColor = InfoBg)
+                colors = CardDefaults.cardColors(containerColor = MoneditaInfoBackground)
             ) {
                 Row(
                     modifier = Modifier.padding(14.dp),
@@ -291,14 +286,14 @@ fun create_Budgets(
                     Icon(
                         Icons.Default.Info,
                         contentDescription = null,
-                        tint = InfoBlue,
+                        tint = MoneditaInfoBackground,
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
                         text = "El presupuesto se asociará a esta categoría para el mes seleccionado.",
                         fontSize = 13.sp,
-                        color = TextPrimary,
+                        color = MoneditaTextStrong,
                         lineHeight = 18.sp
                     )
                 }
@@ -317,7 +312,7 @@ fun create_Budgets(
                     .offset(y = (-150).dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryBlue
+                    containerColor = MoneditaPrimary
                 )
             ) {
                 Text(

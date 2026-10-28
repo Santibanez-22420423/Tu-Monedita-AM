@@ -21,16 +21,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-private val PrimaryBlue = Color(0xFF003882)
-private val TextPrimary = Color(0xFF1E293B)
-private val TextSecondary = Color(0xFF64748B)
-private val OrangeFood = Color(0xFFF97316)
-private val GreenAvailable = Color(0xFF16A34A)
-private val RedExpense = Color(0xFFA81919)
-private val LightGrayCard = Color(0xFFF8FAFC)
-private val LightBlueInfo = Color(0xFFEFF6FF)
-
+import androidx.compose.material3.MaterialTheme
+import com.example.tu_monedita.core.designsystem.theme.*
 data class BudgetMovement(
     val title: String,
     val date: String,
@@ -64,8 +56,8 @@ fun Details_Budgets(
     spent: Double = 1250.0,
     limit: Double = 2000.0,
     icon: ImageVector = Icons.Default.Restaurant,
-    iconColor: Color = OrangeFood,
-    progressColor: Color = OrangeFood,
+    iconColor: Color = MoneditaFood,
+    progressColor: Color = MoneditaFood,
     movements: List<BudgetMovement> = listOf(
         BudgetMovement("Supermercado", "12 nov 2024", 320.0, true),
         BudgetMovement("Comida", "10 nov 2024", 180.0, true),
@@ -86,7 +78,7 @@ fun Details_Budgets(
                         text = "Detalle de presupuesto",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 navigationIcon = {
@@ -94,7 +86,7 @@ fun Details_Budgets(
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver",
-                            tint = TextPrimary
+                            tint = MoneditaTextStrong
                         )
                     }
                 },
@@ -137,12 +129,12 @@ fun Details_Budgets(
                         text = categoryName,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                     Text(
                         text = period,
                         fontSize = 14.sp,
-                        color = TextSecondary
+                        color = MoneditaTextStrong
                     )
                 }
             }
@@ -180,12 +172,12 @@ fun Details_Budgets(
                         text = "$percentage%",
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Bold,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                     Text(
                         text = "utilizado",
                         fontSize = 13.sp,
-                        color = TextSecondary
+                        color = MoneditaTextStrong
                     )
                 }
             }
@@ -197,7 +189,7 @@ fun Details_Budgets(
                 text = "$${formatAmount(spent)} / $${formatAmount(limit)}",
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
-                color = TextPrimary,
+                color = MoneditaTextStrong,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
@@ -211,14 +203,14 @@ fun Details_Budgets(
                 Icon(
                     Icons.Default.AccountBalanceWallet,
                     contentDescription = null,
-                    tint = GreenAvailable,
+                    tint = MoneditaAvailableGreen,
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
                     text = "Te quedan $${formatAmount(remaining)} disponibles",
                     fontSize = 14.sp,
-                    color = GreenAvailable,
+                    color = MoneditaAvailableGreen,
                     fontWeight = FontWeight.Medium
                 )
             }
@@ -233,7 +225,7 @@ fun Details_Budgets(
                 Card(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = LightGrayCard)
+                    colors = CardDefaults.cardColors(containerColor = MoneditaLightGrayCard)
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp)
@@ -241,21 +233,21 @@ fun Details_Budgets(
                         Text(
                             text = "Presupuesto mensual",
                             fontSize = 12.sp,
-                            color = TextSecondary
+                            color = MoneditaTextStrong
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "$${formatAmount(limit)}",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = TextPrimary
+                            color = MoneditaTextStrong
                         )
                     }
                 }
                 Card(
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = LightGrayCard)
+                    colors = CardDefaults.cardColors(containerColor = MoneditaLightGrayCard)
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp)
@@ -263,14 +255,14 @@ fun Details_Budgets(
                         Text(
                             text = "Gastos registrados",
                             fontSize = 12.sp,
-                            color = TextSecondary
+                            color = MoneditaTextStrong
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "$${formatAmount(spent)}",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = TextPrimary
+                            color = MoneditaTextStrong
                         )
                     }
                 }
@@ -283,7 +275,7 @@ fun Details_Budgets(
                 text = "Últimos movimientos",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -309,7 +301,7 @@ fun Details_Budgets(
                             if (movement.isExpense) Icons.Default.ArrowUpward
                             else Icons.Default.ArrowDownward,
                             contentDescription = null,
-                            tint = if (movement.isExpense) RedExpense else GreenAvailable,
+                            tint = if (movement.isExpense) MoneditaExpenseRed else MoneditaAvailableGreen,
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -319,19 +311,19 @@ fun Details_Budgets(
                             text = movement.title,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Medium,
-                            color = TextPrimary
+                            color = MoneditaTextStrong
                         )
                         Text(
                             text = movement.date,
                             fontSize = 12.sp,
-                            color = TextSecondary
+                            color = MoneditaTextStrong
                         )
                     }
                     Text(
                         text = "$${formatAmount(movement.amount, 2)}",
                         fontSize = 15.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 }
             }
