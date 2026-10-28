@@ -17,14 +17,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tu_monedita.core.designsystem.theme.*
 
-private val PrimaryBlue = Color(0xFF003882)
-private val GreenIncome = Color(0xFF16A34A)
-private val RedExpense = Color(0xFFA81919)
-private val LightGreenBg = Color(0xFFDCFCE7)
-private val LightBlueBg = Color(0xFFEFF6FF)
-private val TextPrimary = Color(0xFF1E293B)
-private val TextSecondary = Color(0xFF64748B)
 
 private fun formatAmount(amount: Double, decimals: Int = 0): String {
     val factor = if (decimals == 2) 100L else 1L
@@ -72,7 +66,7 @@ fun detail_Transaction(
                         text = "Detalle del movimiento",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 18.sp,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                 },
                 navigationIcon = {
@@ -80,7 +74,7 @@ fun detail_Transaction(
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver",
-                            tint = TextPrimary
+                            tint = MoneditaTextStrong
                         )
                     }
                 },
@@ -103,7 +97,7 @@ fun detail_Transaction(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isIncome) LightGreenBg else Color(0xFFFEE2E2)
+                    containerColor = if (isIncome) MoneditaLightGreen else Color(0xFFFEE2E2)
                 )
             ) {
                 Column(
@@ -121,7 +115,7 @@ fun detail_Transaction(
                                 modifier = Modifier
                                     .size(48.dp)
                                     .clip(CircleShape)
-                                    .background(if (isIncome) GreenIncome else RedExpense),
+                                    .background(if (isIncome) MoneditaAvailableGreen else MoneditaExpenseRed),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
@@ -137,12 +131,12 @@ fun detail_Transaction(
                                     text = title,
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = TextPrimary
+                                    color = MoneditaTextStrong
                                 )
                                 Text(
                                     text = subtitle,
                                     fontSize = 14.sp,
-                                    color = TextSecondary
+                                    color = MoneditaTextSecondary
                                 )
                             }
                         }
@@ -156,7 +150,7 @@ fun detail_Transaction(
                                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = if (isIncome) GreenIncome else RedExpense
+                                color = if (isIncome) MoneditaAvailableGreen else MoneditaExpenseRed
                             )
                         }
                     }
@@ -166,7 +160,7 @@ fun detail_Transaction(
                         else "-$${formatAmount(amount, 2)}",
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Bold,
-                        color = if (isIncome) GreenIncome else RedExpense
+                        color = if (isIncome) MoneditaAvailableGreen else MoneditaExpenseRed
                     )
                 }
             }
@@ -176,40 +170,40 @@ fun detail_Transaction(
             // Detalles
             DetailRow(
                 icon = Icons.Default.Work,
-                iconBg = LightBlueBg,
-                iconTint = PrimaryBlue,
+                iconBg = MoneditaInfoBackground,
+                iconTint = MoneditaPrimary,
                 label = "Categoría",
                 value = category
             )
             Spacer(modifier = Modifier.height(16.dp))
             DetailRow(
                 icon = Icons.Default.CalendarToday,
-                iconBg = LightBlueBg,
-                iconTint = PrimaryBlue,
+                iconBg = MoneditaInfoBackground,
+                iconTint = MoneditaPrimary,
                 label = "Fecha",
                 value = date
             )
             Spacer(modifier = Modifier.height(16.dp))
             DetailRow(
                 icon = Icons.Outlined.Description,
-                iconBg = LightBlueBg,
-                iconTint = PrimaryBlue,
+                iconBg = MoneditaInfoBackground,
+                iconTint = MoneditaPrimary,
                 label = "Descripción",
                 value = description
             )
             Spacer(modifier = Modifier.height(16.dp))
             DetailRow(
                 icon = Icons.Outlined.Schedule,
-                iconBg = LightBlueBg,
-                iconTint = PrimaryBlue,
+                iconBg = MoneditaInfoBackground,
+                iconTint = MoneditaPrimary,
                 label = "Creado el",
                 value = createdAt
             )
             Spacer(modifier = Modifier.height(16.dp))
             DetailRow(
                 icon = Icons.Outlined.Update,
-                iconBg = LightBlueBg,
-                iconTint = PrimaryBlue,
+                iconBg = MoneditaInfoBackground,
+                iconTint = MoneditaPrimary,
                 label = "Última modificación",
                 value = lastModified
             )
@@ -226,7 +220,7 @@ fun detail_Transaction(
 
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = PrimaryBlue
+                    containerColor = MoneditaPrimary
                 )
             ) {
                 Text(
@@ -247,7 +241,7 @@ fun detail_Transaction(
                     .offset(y = (-130).dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = RedExpense
+                    contentColor = MoneditaExpenseRed
                 )
             ) {
                 Icon(
@@ -297,13 +291,13 @@ private fun DetailRow(
             Text(
                 text = label,
                 fontSize = 13.sp,
-                color = TextSecondary
+                color = MoneditaTextSecondary
             )
             Text(
                 text = value,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
         }
     }

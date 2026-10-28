@@ -21,17 +21,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.MaterialTheme
+import com.example.tu_monedita.core.designsystem.theme.*
 
-private val PrimaryBlue = Color(0xFF003882)
-private  val PrimaryGolden = Color(0xFFC5992E)
-private val DarkBlue = Color(0xFF1E3A8A)
-private val TextPrimary = Color(0xFF1E293B)
-private val TextSecondary = Color(0xFF64748B)
-private val SearchBg = Color(0xFFF1F5F9)
-private val OrangeFood = Color(0xFFF97316)
-private val BlueTransport = Color(0xFF3B82F6)
-private val GreenRent = Color(0xFF22C55E)
-private val PurpleClothes = Color(0xFF8B5CF6)
+
 
 data class BudgetItem(
     val id: String,
@@ -82,8 +75,8 @@ fun main_Budgets(
                 spent = 1250.0,
                 limit = 2000.0,
                 icon = Icons.Default.Restaurant,
-                iconColor = OrangeFood,
-                progressColor = OrangeFood
+                iconColor = MoneditaFood,
+                progressColor = MoneditaFood
             ),
             BudgetItem(
                 id = "2",
@@ -91,8 +84,8 @@ fun main_Budgets(
                 spent = 400.0,
                 limit = 800.0,
                 icon = Icons.Default.DirectionsCar,
-                iconColor = BlueTransport,
-                progressColor = BlueTransport
+                iconColor = MoneditaTransport,
+                progressColor = MoneditaTransport
             ),
             BudgetItem(
                 id = "3",
@@ -100,8 +93,8 @@ fun main_Budgets(
                 spent = 900.0,
                 limit = 1200.0,
                 icon = Icons.Default.Home,
-                iconColor = GreenRent,
-                progressColor = GreenRent
+                iconColor = MoneditaRent,
+                progressColor = MoneditaRent
             ),
             BudgetItem(
                 id = "4",
@@ -109,8 +102,8 @@ fun main_Budgets(
                 spent = 200.0,
                 limit = 600.0,
                 icon = Icons.Default.Checkroom,
-                iconColor = PurpleClothes,
-                progressColor = PurpleClothes
+                iconColor = MoneditaClothing,
+                progressColor = MoneditaClothing
             )
         )
     }
@@ -126,7 +119,7 @@ fun main_Budgets(
         bottomBar = {
             NavigationBar(
                 containerColor = Color.White,
-                contentColor = TextSecondary
+                contentColor = MoneditaTextSecondary
             ) {
                 NavigationBarItem(
                     selected = selectedBottomNav == 0,
@@ -137,8 +130,8 @@ fun main_Budgets(
                     icon = { Icon(Icons.Outlined.Home, contentDescription = "Inicio") },
                     label = { Text("Inicio", fontSize = 11.sp) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = PrimaryGolden,
-                        selectedTextColor = PrimaryGolden,
+                        selectedIconColor = MoneditaAccent,
+                        selectedTextColor = MoneditaAccent,
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -151,8 +144,8 @@ fun main_Budgets(
                     icon = { Icon(Icons.Outlined.ReceiptLong, contentDescription = "Movimientos") },
                     label = { Text("Movimientos", fontSize = 11.sp) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = PrimaryGolden,
-                        selectedTextColor = PrimaryGolden,
+                        selectedIconColor = MoneditaAccent,
+                        selectedTextColor = MoneditaAccent,
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -165,8 +158,8 @@ fun main_Budgets(
                     icon = { Icon(Icons.Default.AccountBalanceWallet, contentDescription = "Presupuestos") },
                     label = { Text("Presupuestos", fontSize = 11.sp) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = PrimaryGolden,
-                        selectedTextColor = PrimaryGolden,
+                        selectedIconColor = MoneditaAccent,
+                        selectedTextColor = MoneditaAccent,
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -179,8 +172,8 @@ fun main_Budgets(
                     icon = { Icon(Icons.Outlined.Apps, contentDescription = "Más") },
                     label = { Text("Más", fontSize = 11.sp) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = PrimaryGolden,
-                        selectedTextColor = PrimaryGolden,
+                        selectedIconColor = MoneditaAccent,
+                        selectedTextColor = MoneditaAccent,
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -189,7 +182,7 @@ fun main_Budgets(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onAddClick,
-                containerColor = PrimaryBlue,
+                containerColor = MoneditaPrimary,
                 contentColor = Color.White,
                 shape = CircleShape
             ) {
@@ -226,7 +219,7 @@ fun main_Budgets(
                         text = "TU MONEDITA",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = TextSecondary,
+                        color = MoneditaTextSecondary,
                         letterSpacing = 0.5.sp
                     )
                 }
@@ -240,7 +233,7 @@ fun main_Budgets(
                     Icon(
                         Icons.Default.Person,
                         contentDescription = "Perfil",
-                        tint = TextSecondary,
+                        tint = MoneditaTextSecondary,
                         modifier = Modifier.size(22.dp)
                     )
                 }
@@ -251,7 +244,7 @@ fun main_Budgets(
                 text = "Presupuestos",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                color = TextPrimary,
+                color = MoneditaTextStrong,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
 
@@ -263,7 +256,7 @@ fun main_Budgets(
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = DarkBlue)
+                colors = CardDefaults.cardColors(containerColor = MoneditaDarkBlue)
             ) {
                 Column(
                     modifier = Modifier
@@ -340,7 +333,7 @@ fun main_Budgets(
                     placeholder = {
                         Text(
                             "Buscar categoría...",
-                            color = TextSecondary,
+                            color = MoneditaTextSecondary,
                             fontSize = 14.sp
                         )
                     },
@@ -348,15 +341,15 @@ fun main_Budgets(
                         Icon(
                             Icons.Default.Search,
                             contentDescription = null,
-                            tint = TextSecondary
+                            tint = MoneditaTextSecondary
                         )
                     },
                     shape = RoundedCornerShape(24.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent,
-                        focusedContainerColor = SearchBg,
-                        unfocusedContainerColor = SearchBg
+                        focusedContainerColor = MoneditaSearchBackground,
+                        unfocusedContainerColor = MoneditaSearchBackground
                     ),
                     singleLine = true
                 )
@@ -364,14 +357,14 @@ fun main_Budgets(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
-                        .background(SearchBg)
+                        .background(MoneditaSearchBackground)
                         .clickable { onFilterClick() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         Icons.Default.Tune,
                         contentDescription = "Filtros",
-                        tint = TextSecondary
+                        tint = MoneditaTextSecondary
                     )
                 }
             }
@@ -437,25 +430,25 @@ private fun BudgetListItem(
                         text = budget.name,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = TextPrimary
+                        color = MoneditaTextStrong
                     )
                     Text(
                         text = "$${formatAmount(budget.spent)} / $${formatAmount(budget.limit)}",
                         fontSize = 13.sp,
-                        color = TextSecondary
+                        color = MoneditaTextSecondary
                     )
                 }
                 Text(
                     text = "${budget.percentage}%",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = TextSecondary
+                    color = MoneditaTextSecondary
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(
                     Icons.Default.ChevronRight,
                     contentDescription = null,
-                    tint = TextSecondary,
+                    tint = MoneditaTextSecondary,
                     modifier = Modifier.size(20.dp)
                 )
             }

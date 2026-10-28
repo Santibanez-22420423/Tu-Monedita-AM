@@ -19,18 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-// Colores del diseño
-private val PrimaryBlue = Color(0xFF003882)
-private  val PrimaryGolden = Color(0xFFC5992E)
-private val DarkBlue = Color(0xFF1E3A8A)
-private val GreenIncome = Color(0xFF16A34A)
-private val RedExpense = Color(0xFFA81919)
-private val LightGrayBg = Color(0xFFF8FAFC)
-private val CardGray = Color(0xFFF1F5F9)
-private val TextPrimary = Color(0xFF1E293B)
-private val TextSecondary = Color(0xFF64748B)
-private val SearchBg = Color(0xFFF1F5F9)
+import com.example.tu_monedita.core.designsystem.theme.*
 
 data class TransactionItem(
     val id: String,
@@ -133,7 +122,7 @@ fun main_Transaction(
         bottomBar = {
             NavigationBar(
                 containerColor = Color.White,
-                contentColor = TextSecondary
+                contentColor = MoneditaTextSecondary
             ) {
                 NavigationBarItem(
                     selected = selectedBottomNav == 0,
@@ -144,8 +133,8 @@ fun main_Transaction(
                     icon = { Icon(Icons.Outlined.Home, contentDescription = "Inicio") },
                     label = { Text("Inicio", fontSize = 11.sp) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = PrimaryGolden,
-                        selectedTextColor = PrimaryGolden,
+                        selectedIconColor = MoneditaAccent,
+                        selectedTextColor = MoneditaAccent,
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -158,8 +147,8 @@ fun main_Transaction(
                     icon = { Icon(Icons.Default.ReceiptLong, contentDescription = "Movimientos") },
                     label = { Text("Movimientos", fontSize = 11.sp) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = PrimaryGolden,
-                        selectedTextColor = PrimaryGolden,
+                        selectedIconColor = MoneditaAccent,
+                        selectedTextColor = MoneditaAccent,
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -172,8 +161,8 @@ fun main_Transaction(
                     icon = { Icon(Icons.Outlined.ShoppingBag, contentDescription = "Presupuestos") },
                     label = { Text("Presupuestos", fontSize = 11.sp) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = PrimaryGolden,
-                        selectedTextColor = PrimaryGolden,
+                        selectedIconColor = MoneditaAccent,
+                        selectedTextColor = MoneditaAccent,
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -186,8 +175,8 @@ fun main_Transaction(
                     icon = { Icon(Icons.Outlined.Apps, contentDescription = "Más") },
                     label = { Text("Más", fontSize = 11.sp) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = PrimaryGolden,
-                        selectedTextColor = PrimaryGolden,
+                        selectedIconColor = MoneditaAccent,
+                        selectedTextColor = MoneditaAccent,
                         indicatorColor = Color.Transparent
                     )
                 )
@@ -196,7 +185,7 @@ fun main_Transaction(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onAddClick,
-                containerColor = PrimaryBlue,
+                containerColor = MoneditaPrimary,
                 contentColor = Color.White,
                 shape = CircleShape
             ) {
@@ -233,7 +222,7 @@ fun main_Transaction(
                         text = "TU MONEDITA",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = TextSecondary,
+                        color = MoneditaTextSecondary,
                         letterSpacing = 0.5.sp
                     )
                 }
@@ -247,7 +236,7 @@ fun main_Transaction(
                     Icon(
                         Icons.Default.Person,
                         contentDescription = "Perfil",
-                        tint = TextSecondary,
+                        tint = MoneditaTextSecondary,
                         modifier = Modifier.size(22.dp)
                     )
                 }
@@ -258,7 +247,7 @@ fun main_Transaction(
                 text = "Movimientos",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                color = TextPrimary,
+                color = MoneditaTextStrong,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
 
@@ -270,7 +259,7 @@ fun main_Transaction(
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = DarkBlue)
+                colors = CardDefaults.cardColors(containerColor = MoneditaDarkBlue)
             ) {
                 Column(
                     modifier = Modifier
@@ -307,14 +296,14 @@ fun main_Transaction(
                                     Icon(
                                         Icons.Default.ArrowUpward,
                                         contentDescription = null,
-                                        tint = GreenIncome,
+                                        tint = MoneditaAvailableGreen,
                                         modifier = Modifier.size(16.dp)
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
                                         text = "Ingresos",
                                         fontSize = 12.sp,
-                                        color = TextSecondary
+                                        color = MoneditaTextSecondary
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(4.dp))
@@ -322,7 +311,7 @@ fun main_Transaction(
                                     text = "$2,500.00",
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = TextPrimary
+                                    color = MoneditaTextStrong
                                 )
                             }
                         }
@@ -339,14 +328,14 @@ fun main_Transaction(
                                     Icon(
                                         Icons.Default.ArrowDownward,
                                         contentDescription = null,
-                                        tint = RedExpense,
+                                        tint = MoneditaExpenseRed,
                                         modifier = Modifier.size(16.dp)
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
                                         text = "Gastos",
                                         fontSize = 12.sp,
-                                        color = TextSecondary
+                                        color = MoneditaTextSecondary
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(4.dp))
@@ -354,7 +343,7 @@ fun main_Transaction(
                                     text = "$1,660.00",
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = TextPrimary
+                                    color = MoneditaTextStrong
                                 )
                             }
                         }
@@ -379,7 +368,7 @@ fun main_Transaction(
                     placeholder = {
                         Text(
                             "Buscar movimiento...",
-                            color = TextSecondary,
+                            color = MoneditaTextSecondary,
                             fontSize = 14.sp
                         )
                     },
@@ -387,15 +376,15 @@ fun main_Transaction(
                         Icon(
                             Icons.Default.Search,
                             contentDescription = null,
-                            tint = TextSecondary
+                            tint = MoneditaTextSecondary
                         )
                     },
                     shape = RoundedCornerShape(24.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent,
-                        focusedContainerColor = SearchBg,
-                        unfocusedContainerColor = SearchBg
+                        focusedContainerColor = MoneditaSearchBackground,
+                        unfocusedContainerColor = MoneditaSearchBackground
                     ),
                     singleLine = true
                 )
@@ -403,7 +392,7 @@ fun main_Transaction(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
-                        .background(SearchBg)
+                        .background(MoneditaSearchBackground)
                         .clickable {
                             showFilter = true
                             onFilterClick()
@@ -413,7 +402,7 @@ fun main_Transaction(
                     Icon(
                         Icons.Default.Tune,
                         contentDescription = "Filtros",
-                        tint = TextSecondary
+                        tint = MoneditaTextSecondary
                     )
                 }
             }
@@ -498,17 +487,17 @@ private fun TransactionListItem(
                 text = transaction.title,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             Text(
                 text = transaction.subtitle,
                 fontSize = 13.sp,
-                color = TextSecondary
+                color = MoneditaTextSecondary
             )
             Text(
                 text = transaction.date,
                 fontSize = 12.sp,
-                color = TextSecondary.copy(alpha = 0.8f)
+                color = MoneditaTextSecondary.copy(alpha = 0.8f)
             )
         }
         Text(
@@ -516,7 +505,7 @@ private fun TransactionListItem(
             else "-$${formatAmount(transaction.amount, 2)}",
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold,
-            color = if (transaction.isIncome) GreenIncome else RedExpense
+            color = if (transaction.isIncome) MoneditaAvailableGreen else MoneditaExpenseRed
         )
     }
 

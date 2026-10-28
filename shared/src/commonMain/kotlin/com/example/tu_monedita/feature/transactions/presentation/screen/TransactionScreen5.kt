@@ -16,12 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tu_monedita.core.designsystem.theme.*
 
-private val PrimaryBlue = Color(0xFF003882)
-private val LightGrayBg = Color(0xFFF1F5F9)
-private val TextPrimary = Color(0xFF1E293B)
-private val TextSecondary = Color(0xFF64748B)
-private val BorderGray = Color(0xFFE2E8F0)
 
 enum class FilterType {
     ALL, INCOME, EXPENSE
@@ -88,13 +84,13 @@ fun TransactionScreen5(
                 text = "Filtrar movimientos",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = TextPrimary
+                color = MoneditaTextStrong
             )
             IconButton(onClick = onDismiss) {
                 Icon(
                     Icons.Default.Close,
                     contentDescription = "Cerrar",
-                    tint = TextSecondary
+                    tint = MoneditaTextSecondary
                 )
             }
         }
@@ -106,7 +102,7 @@ fun TransactionScreen5(
             text = "Tipo",
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium,
-            color = TextPrimary
+            color = MoneditaTextStrong
         )
         Spacer(modifier = Modifier.height(10.dp))
         Row(
@@ -140,7 +136,7 @@ fun TransactionScreen5(
             text = "Categoría",
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium,
-            color = TextPrimary
+            color = MoneditaTextStrong
         )
         Spacer(modifier = Modifier.height(8.dp))
         ExposedDropdownMenuBox(
@@ -159,8 +155,8 @@ fun TransactionScreen5(
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = BorderGray,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaBorderGray,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 )
@@ -188,7 +184,7 @@ fun TransactionScreen5(
             text = "Rango de fechas",
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium,
-            color = TextPrimary
+            color = MoneditaTextStrong
         )
         Spacer(modifier = Modifier.height(8.dp))
         Row(
@@ -203,20 +199,20 @@ fun TransactionScreen5(
                     .weight(1f)
                     .clickable { /* Abrir date picker Desde */ },
                 placeholder = {
-                    Text("Desde", color = TextSecondary, fontSize = 14.sp)
+                    Text("Desde", color = MoneditaTextSecondary, fontSize = 14.sp)
                 },
                 leadingIcon = {
                     Icon(
                         Icons.Default.CalendarToday,
                         contentDescription = null,
-                        tint = TextSecondary,
+                        tint = MoneditaTextSecondary,
                         modifier = Modifier.size(18.dp)
                     )
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = BorderGray,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaBorderGray,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -230,20 +226,20 @@ fun TransactionScreen5(
                     .weight(1f)
                     .clickable { /* Abrir date picker Hasta */ },
                 placeholder = {
-                    Text("Hasta", color = TextSecondary, fontSize = 14.sp)
+                    Text("Hasta", color = MoneditaTextSecondary, fontSize = 14.sp)
                 },
                 leadingIcon = {
                     Icon(
                         Icons.Default.CalendarToday,
                         contentDescription = null,
-                        tint = TextSecondary,
+                        tint = MoneditaTextSecondary,
                         modifier = Modifier.size(18.dp)
                     )
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = BorderGray,
-                    unfocusedBorderColor = BorderGray,
+                    focusedBorderColor = MoneditaBorderGray,
+                    unfocusedBorderColor = MoneditaBorderGray,
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White
                 ),
@@ -263,7 +259,7 @@ fun TransactionScreen5(
                 .height(52.dp),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = PrimaryBlue
+                containerColor = MoneditaPrimary
             )
         ) {
             Text(
@@ -290,7 +286,7 @@ fun TransactionScreen5(
                 text = "Limpiar filtros",
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
-                color = TextSecondary
+                color = MoneditaTextSecondary
             )
         }
     }
@@ -306,14 +302,14 @@ private fun FilterChipItem(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(24.dp))
-            .background(if (selected) PrimaryBlue else LightGrayBg)
+            .background(if (selected) MoneditaPrimary else MoneditaLightGrayCard)
             .clickable(onClick = onClick)
             .padding(vertical = 12.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
-            color = if (selected) Color.White else TextSecondary,
+            color = if (selected) Color.White else MoneditaTextSecondary,
             fontWeight = FontWeight.SemiBold,
             fontSize = 14.sp
         )
