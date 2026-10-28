@@ -17,12 +17,12 @@ kotlin {
             isStatic = true
         }
     }
-
+    
     android {
        namespace = "com.example.tu_monedita.shared"
        compileSdk = libs.versions.android.compileSdk.get().toInt()
        minSdk = libs.versions.android.minSdk.get().toInt()
-
+    
        compilerOptions {
            jvmTarget = JvmTarget.JVM_11
        }
@@ -38,7 +38,7 @@ kotlin {
            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
        }
     }
-
+    
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
@@ -49,9 +49,6 @@ kotlin {
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
-            api(compose.materialIconsExtended)
-            implementation(compose.material3)
-            implementation(compose.materialIconsExtended)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
