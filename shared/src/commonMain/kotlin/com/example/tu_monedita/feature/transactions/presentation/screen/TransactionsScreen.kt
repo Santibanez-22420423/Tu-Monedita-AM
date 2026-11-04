@@ -19,7 +19,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tu_monedita.core.components.NavigationOption
 import com.example.tu_monedita.core.designsystem.theme.*
+import com.example.tu_monedita.core.components.MoneditaBottomNavigation
 
 data class TransactionItem(
     val id: String,
@@ -54,6 +56,10 @@ private fun formatAmount(amount: Double, decimals: Int = 0): String {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun main_Transaction(
+    selectedItem: String,
+    dynamicOptions: List<NavigationOption>,
+    onItemClick: (String) -> Unit,
+    onMoreClick: () -> Unit,
     onAddClick: () -> Unit = {},
     onTransactionClick: (TransactionItem) -> Unit = {},
     onFilterClick: () -> Unit = {},
@@ -114,85 +120,19 @@ fun main_Transaction(
     }
 
     var searchQuery by remember { mutableStateOf("") }
-    var selectedBottomNav by remember { mutableStateOf(1) }
     var showFilter by remember { mutableStateOf(false) }
 
     Scaffold(
-        containerColor = Color.White,
+        containerColor = MoneditaBackground,
         bottomBar = {
-            NavigationBar(
-                containerColor = Color.White,
-                contentColor = MoneditaTextSecondary
-            ) {
-                NavigationBarItem(
-                    selected = selectedBottomNav == 0,
-                    onClick = {
-                        selectedBottomNav = 0
-                        onBottomNavClick(0)
-                    },
-                    icon = { Icon(Icons.Outlined.Home, contentDescription = "Inicio") },
-                    label = { Text("Inicio", fontSize = 11.sp) },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MoneditaAccent,
-                        selectedTextColor = MoneditaAccent,
-                        indicatorColor = Color.Transparent
-                    )
-                )
-                NavigationBarItem(
-                    selected = selectedBottomNav == 1,
-                    onClick = {
-                        selectedBottomNav = 1
-                        onBottomNavClick(1)
-                    },
-                    icon = { Icon(Icons.Default.ReceiptLong, contentDescription = "Movimientos") },
-                    label = { Text("Movimientos", fontSize = 11.sp) },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MoneditaAccent,
-                        selectedTextColor = MoneditaAccent,
-                        indicatorColor = Color.Transparent
-                    )
-                )
-                NavigationBarItem(
-                    selected = selectedBottomNav == 2,
-                    onClick = {
-                        selectedBottomNav = 2
-                        onBottomNavClick(2)
-                    },
-                    icon = { Icon(Icons.Outlined.ShoppingBag, contentDescription = "Presupuestos") },
-                    label = { Text("Presupuestos", fontSize = 11.sp) },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MoneditaAccent,
-                        selectedTextColor = MoneditaAccent,
-                        indicatorColor = Color.Transparent
-                    )
-                )
-                NavigationBarItem(
-                    selected = selectedBottomNav == 3,
-                    onClick = {
-                        selectedBottomNav = 3
-                        onBottomNavClick(3)
-                    },
-                    icon = { Icon(Icons.Outlined.Apps, contentDescription = "Más") },
-                    label = { Text("Más", fontSize = 11.sp) },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MoneditaAccent,
-                        selectedTextColor = MoneditaAccent,
-                        indicatorColor = Color.Transparent
-                    )
-                )
-            }
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddClick,
-                containerColor = MoneditaPrimary,
-                contentColor = Color.White,
-                shape = CircleShape
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Agregar")
-            }
+            MoneditaBottomNavigation(
+                selectedItem = selectedItem,
+                dynamicOptions = dynamicOptions,
+                onItemClick = onItemClick,
+                onMoreClick = onMoreClick
+            )
         }
-    ) { paddingValues ->
+    )  { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

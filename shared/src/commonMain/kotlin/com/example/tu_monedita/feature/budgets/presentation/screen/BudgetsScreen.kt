@@ -22,6 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.MaterialTheme
+import com.example.tu_monedita.core.components.MoneditaBottomNavigation
+import com.example.tu_monedita.core.components.NavigationOption
+import androidx.compose.material.icons.filled.AccountBalanceWallet
+import androidx.compose.material.icons.filled.ReceiptLong
 import com.example.tu_monedita.core.designsystem.theme.*
 
 
@@ -62,6 +66,10 @@ private fun formatAmount(amount: Double, decimals: Int = 0): String {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun main_Budgets(
+    selectedItem: String,
+    dynamicOptions: List<NavigationOption>,
+    onItemClick: (String) -> Unit,
+    onMoreClick: () -> Unit,
     onBudgetClick: (BudgetItem) -> Unit = {},
     onFilterClick: () -> Unit = {},
     onAddClick: () -> Unit = {},
@@ -109,7 +117,6 @@ fun main_Budgets(
     }
 
     var searchQuery by remember { mutableStateOf("") }
-    var selectedBottomNav by remember { mutableStateOf(2) }
 
     val totalBudgeted = budgets.sumOf { it.limit }
     val totalSpent = budgets.sumOf { it.spent }
@@ -117,67 +124,12 @@ fun main_Budgets(
     Scaffold(
         containerColor = Color.White,
         bottomBar = {
-            NavigationBar(
-                containerColor = Color.White,
-                contentColor = MoneditaTextSecondary
-            ) {
-                NavigationBarItem(
-                    selected = selectedBottomNav == 0,
-                    onClick = {
-                        selectedBottomNav = 0
-                        onBottomNavClick(0)
-                    },
-                    icon = { Icon(Icons.Outlined.Home, contentDescription = "Inicio") },
-                    label = { Text("Inicio", fontSize = 11.sp) },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MoneditaAccent,
-                        selectedTextColor = MoneditaAccent,
-                        indicatorColor = Color.Transparent
-                    )
-                )
-                NavigationBarItem(
-                    selected = selectedBottomNav == 1,
-                    onClick = {
-                        selectedBottomNav = 1
-                        onBottomNavClick(1)
-                    },
-                    icon = { Icon(Icons.Outlined.ReceiptLong, contentDescription = "Movimientos") },
-                    label = { Text("Movimientos", fontSize = 11.sp) },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MoneditaAccent,
-                        selectedTextColor = MoneditaAccent,
-                        indicatorColor = Color.Transparent
-                    )
-                )
-                NavigationBarItem(
-                    selected = selectedBottomNav == 2,
-                    onClick = {
-                        selectedBottomNav = 2
-                        onBottomNavClick(2)
-                    },
-                    icon = { Icon(Icons.Default.AccountBalanceWallet, contentDescription = "Presupuestos") },
-                    label = { Text("Presupuestos", fontSize = 11.sp) },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MoneditaAccent,
-                        selectedTextColor = MoneditaAccent,
-                        indicatorColor = Color.Transparent
-                    )
-                )
-                NavigationBarItem(
-                    selected = selectedBottomNav == 3,
-                    onClick = {
-                        selectedBottomNav = 3
-                        onBottomNavClick(3)
-                    },
-                    icon = { Icon(Icons.Outlined.Apps, contentDescription = "Más") },
-                    label = { Text("Más", fontSize = 11.sp) },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MoneditaAccent,
-                        selectedTextColor = MoneditaAccent,
-                        indicatorColor = Color.Transparent
-                    )
-                )
-            }
+            MoneditaBottomNavigation(
+                selectedItem = selectedItem,
+                dynamicOptions = dynamicOptions,
+                onItemClick = onItemClick,
+                onMoreClick = onMoreClick
+            )
         },
         floatingActionButton = {
             FloatingActionButton(

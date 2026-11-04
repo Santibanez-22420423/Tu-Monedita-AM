@@ -13,12 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.tu_monedita.core.designsystem.theme.TuMoneditaTheme
-import com.example.tu_monedita.feature.authentication.presentation.screen.LoginScreen
-import com.example.tu_monedita.feature.authentication.presentation.screen.WelcomeScreen
-import com.example.tu_monedita.feature.authentication.presentation.screen.RegisterScreen
-import org.jetbrains.compose.resources.painterResource
+import com.example.tu_monedita.core.navigation.AppNavigation
 
-import tu_monedita.shared.generated.resources.Res
 
 /**
  * Defines the root composable of Tu Monedita.
@@ -33,8 +29,6 @@ import tu_monedita.shared.generated.resources.Res
 @Preview
 fun App() {
     TuMoneditaTheme {
-        // WelcomeScreen()
-        // LoginScreen()
-        RegisterScreen()
+        AppNavigation()
     }
 }
