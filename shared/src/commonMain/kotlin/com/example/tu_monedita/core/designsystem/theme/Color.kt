@@ -41,6 +41,14 @@ val MoneditaFood = Color(0xFFF2913D)
 val MoneditaTransport = Color(0xFF125773)
 val MoneditaRent = Color(0xFF471B59)
 val MoneditaClothing = Color(0xFFD95555)
+
+val MoneditaEntretaiment = Color(0xFFBA68C8)
+
+val MoneditaFavorite =  Color(0xFFF06292)
+
+val MoneditaEducation = Color(0xFF4DB6AC)
+
+val MoneditaInvestments = Color(0xFF4DB6AC)
 // Transaction backgrounds.
 val MoneditaExpenseBackground = Color(0xFFFEE2E2)
 val MoneditaIncomeBackground = Color(0xFFDCFCE7)

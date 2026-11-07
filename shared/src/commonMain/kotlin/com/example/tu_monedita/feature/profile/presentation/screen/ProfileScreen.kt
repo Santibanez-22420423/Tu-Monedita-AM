@@ -1,4 +1,3 @@
-
 package com.example.tu_monedita.feature.profile.presentation.screen
 
 import androidx.compose.foundation.BorderStroke
@@ -10,7 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.tu_monedita.core.components.MoneditaBottomNavigation
 import com.example.tu_monedita.core.components.NavigationOption
 import com.example.tu_monedita.core.designsystem.theme.*
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun ProfileScreen(
@@ -30,8 +30,10 @@ fun ProfileScreen(
     onMoreClick: () -> Unit,
     onLogout: () -> Unit
 ) {
+    var currentScreen by remember { mutableStateOf(ProfileScreenState.MAIN) }
+
     Scaffold(
-        containerColor = MoneditaBackground,
+        containerColor = Color.White,
         bottomBar = {
             MoneditaBottomNavigation(
                 selectedItem = selectedItem,
@@ -41,135 +43,178 @@ fun ProfileScreen(
             )
         }
     ) { paddingValues ->
-        Column(
+
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 20.dp)
+                .background(Color.White)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MoneditaBackground)
-                    .padding(horizontal = 20.dp)
-            ) {
-                Spacer(modifier = Modifier.height(40.dp))
 
-                // Información del usuario
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Box(
+            when (currentScreen) {
+
+                // ===================== PANTALLA PRINCIPAL =====================
+                ProfileScreenState.MAIN -> {
+                    Column(
                         modifier = Modifier
-                            .size(110.dp)
-                            .clip(CircleShape)
-                            .background(MoneditaAccent.copy(alpha = 0.2f)),
-                        contentAlignment = Alignment.Center
+                            .fillMaxSize()
+                            .padding(horizontal = 20.dp)
                     ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Person,
-                            contentDescription = "Avatar",
-                            tint = MoneditaAccent,
-                            modifier = Modifier.size(70.dp)
-                        )
+                        Spacer(modifier = Modifier.height(40.dp))
+
+                        // Información del usuario
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(110.dp)
+                                    .clip(CircleShape)
+                                    .background(MoneditaAccent.copy(alpha = 0.2f)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Person,
+                                    contentDescription = "Avatar",
+                                    tint = MoneditaAccent,
+                                    modifier = Modifier.size(70.dp)
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            Text(
+                                text = "Ana García",
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = MoneditaTextPrimary
+                            )
+
+                            Text(
+                                text = "ana@email.com",
+                                fontSize = 14.sp,
+                                color = MoneditaTextSecondary
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(40.dp))
+
+                        // Opciones del perfil
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            ProfileOption(
+                                icon = Icons.Outlined.Person,
+                                title = "Mi perfil",
+                                onClick = { currentScreen = ProfileScreenState.MY_PROFILE }
+                            )
+
+                            ProfileOption(
+                                icon = Icons.Outlined.AccountBalanceWallet,
+                                title = "Cuentas",
+                                onClick = { currentScreen = ProfileScreenState.ACCOUNTS }
+                            )
+
+                            ProfileOption(
+                                icon = Icons.Outlined.Settings,
+                                title = "Configuración",
+                                onClick = { currentScreen = ProfileScreenState.SETTINGS }
+                            )
+
+                            ProfileOption(
+                                icon = Icons.Outlined.HelpOutline,
+                                title = "Ayuda",
+                                onClick = { currentScreen = ProfileScreenState.HELP }
+                            )
+
+                            Spacer(modifier = Modifier.height(24.dp))
+
+                            // Cerrar sesión
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onLogout() },
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MoneditaExpenseBackground
+                                ),
+                                border = BorderStroke(
+                                    1.dp,
+                                    MoneditaExpenseRed.copy(alpha = 0.3f)
+                                )
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .padding(16.dp)
+                                        .fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.ExitToApp,
+                                        contentDescription = "Cerrar sesión",
+                                        tint = MoneditaExpenseRed
+                                    )
+
+                                    Spacer(modifier = Modifier.width(16.dp))
+
+                                    Text(
+                                        text = "Cerrar sesión",
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        color = MoneditaExpenseRed
+                                    )
+                                }
+                            }
+                        }
                     }
+                }
 
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = "Ana García",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MoneditaTextPrimary
-                    )
-
-                    Text(
-                        text = "ana@email.com",
-                        fontSize = 14.sp,
-                        color = MoneditaTextSecondary
+                // ===================== CUENTAS =====================
+                ProfileScreenState.ACCOUNTS -> {
+                    AccountsScreen(
+                        onBackClick = { currentScreen = ProfileScreenState.MAIN }
                     )
                 }
 
-                Spacer(modifier = Modifier.height(40.dp))
-
-                // Opciones del perfil
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    ProfileOption(
-                        icon = Icons.Outlined.Person,
-                        title = "Mi perfil"
+                // ===================== CONFIGURACIÓN =====================
+                ProfileScreenState.SETTINGS -> {
+                    SettingsScreen(
+                        onBackClick = { currentScreen = ProfileScreenState.MAIN }
                     )
+                }
 
-                    ProfileOption(
-                        icon = Icons.Outlined.AccountBalanceWallet,
-                        title = "Cuentas"
+                // ===================== AYUDA =====================
+                ProfileScreenState.HELP -> {
+                    HelpScreen(
+                        onBackClick = { currentScreen = ProfileScreenState.MAIN }
                     )
+                }
 
-                    ProfileOption(
-                        icon = Icons.Outlined.Settings,
-                        title = "Configuración"
+                // ===================== MI PERFIL (por ahora placeholder) =====================
+                ProfileScreenState.MY_PROFILE -> {
+                    // Puedes crear después MyProfileScreen
+                    // Por ahora regresamos al main
+                    MyProfileScreen(
+                        onBackClick = { currentScreen = ProfileScreenState.MAIN }
                     )
-
-                    ProfileOption(
-                        icon = Icons.Outlined.HelpOutline,
-                        title = "Ayuda"
-                    )
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    // Cerrar sesión
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onLogout() },
-                        shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MoneditaExpenseBackground
-                        ),
-                        border = BorderStroke(
-                            1.dp,
-                            MoneditaExpenseRed.copy(alpha = 0.3f)
-                        )
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ExitToApp,
-                                contentDescription = "Cerrar sesión",
-                                tint = MoneditaExpenseRed
-                            )
-
-                            Spacer(modifier = Modifier.width(16.dp))
-
-                            Text(
-                                text = "Cerrar sesión",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = MoneditaExpenseRed
-                            )
-                        }
-                    }
                 }
             }
         }
     }
 }
 
+
 @Composable
 fun ProfileOption(
     icon: ImageVector,
-    title: String
+    title: String,
+    onClick: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Lógica futura */ },
+            .clickable(onClick = onClick),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = MoneditaWhite
@@ -205,4 +250,13 @@ fun ProfileOption(
             )
         }
     }
+}
+
+
+private enum class ProfileScreenState {
+    MAIN,
+    MY_PROFILE,
+    ACCOUNTS,
+    SETTINGS,
+    HELP
 }

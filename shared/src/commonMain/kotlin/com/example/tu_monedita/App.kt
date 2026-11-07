@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.tu_monedita.core.designsystem.theme.TuMoneditaTheme
 import com.example.tu_monedita.core.navigation.AppNavigation
+import com.example.tu_monedita.feature.authentication.presentation.screen.RegisterScreen
+import com.example.tu_monedita.feature.budgets.presentation.screen.main_Budgets
 
 
 /**
@@ -30,5 +32,7 @@ import com.example.tu_monedita.core.navigation.AppNavigation
 fun App() {
     TuMoneditaTheme {
         AppNavigation()
+        //RegisterScreen()
+
     }
 }

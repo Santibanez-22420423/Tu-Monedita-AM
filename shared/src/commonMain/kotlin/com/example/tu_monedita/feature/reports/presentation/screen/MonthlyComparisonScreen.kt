@@ -2,7 +2,9 @@
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -37,14 +39,17 @@ fun MonthlyComparisonScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .verticalScroll(rememberScrollState())
             .padding(20.dp)
     ) {
+
+        // Encabezado
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBackClick) {
                 Icon(
-                    Icons.Default.ArrowBack,
+                    imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Regresar",
                     tint = MoneditaTextStrong
                 )
@@ -133,6 +138,7 @@ fun MonthlyComparisonScreen(
                     verticalAlignment = Alignment.Bottom
                 ) {
                     monthlyReports.forEach { report ->
+
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Bottom,
@@ -196,6 +202,7 @@ fun MonthlyComparisonScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         monthlyReports.forEach { report ->
+
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -228,7 +235,7 @@ fun MonthlyComparisonScreen(
                         )
 
                         Text(
-                            text = "\$${report.income}.00",
+                            text = "$${report.income}.00",
                             color = MoneditaTextStrong,
                             fontWeight = FontWeight.SemiBold
                         )
@@ -245,7 +252,7 @@ fun MonthlyComparisonScreen(
                         )
 
                         Text(
-                            text = "\$${report.expenses}.00",
+                            text = "$${report.expenses}.00",
                             color = MoneditaTextStrong,
                             fontWeight = FontWeight.SemiBold
                         )
@@ -267,7 +274,7 @@ fun MonthlyComparisonScreen(
                         )
 
                         Text(
-                            text = "\$${report.income - report.expenses}.00",
+                            text = "$${report.income - report.expenses}.00",
                             color = MoneditaAvailableGreen,
                             fontWeight = FontWeight.Bold
                         )
