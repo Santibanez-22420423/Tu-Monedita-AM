@@ -1,5 +1,4 @@
-﻿
-package com.example.tu_monedita.feature.categories.presentation.screen
+﻿package com.example.tu_monedita.feature.categories.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,7 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tu_monedita.core.components.MoneditaBottomNavigation
 import com.example.tu_monedita.core.components.NavigationOption
+import com.example.tu_monedita.core.designsystem.component.MoneditaHeader
+import com.example.tu_monedita.core.designsystem.images.MoneditaExpression
 import com.example.tu_monedita.core.designsystem.theme.*
+
 
 data class Category(
     val id: String,
@@ -32,6 +34,8 @@ data class Category(
     val isIncome: Boolean
 )
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun main_Categories(
     selectedItem: String,
@@ -42,28 +46,35 @@ fun main_Categories(
     onCategoryClick: (Category) -> Unit = {},
     onBottomNavClick: (Int) -> Unit = {}
 ) {
+
+    // ===================== ESTADOS DE NAVEGACIÓN =====================
+    var currentScreen by remember { mutableStateOf(CategoryScreen.MAIN) }
+    var selectedCategory by remember { mutableStateOf<Category?>(null) }
     var selectedTab by remember { mutableIntStateOf(0) }
 
     val categories = remember {
         listOf(
-            Category("1", "Comida y bebida", Icons.Default.Restaurant, Color(0xFFE57373), false),
+            Category("1", "Comida y bebida", Icons.Default.Restaurant, MoneditaFood, false),
             Category("2", "Transporte", Icons.Default.DirectionsCar, MoneditaTransport, false),
             Category("3", "Vivienda", Icons.Default.Home, MoneditaRent, false),
-            Category("4", "Entretenimiento", Icons.Default.SportsEsports, Color(0xFFBA68C8), false),
-            Category("5", "Salud", Icons.Default.Favorite, Color(0xFFF06292), false),
-            Category("6", "Educación", Icons.Default.School, Color(0xFF4DB6AC), false),
+            Category("4", "Entretenimiento", Icons.Default.SportsEsports, MoneditaEntretaiment, false),
+            Category("5", "Salud", Icons.Default.Favorite, MoneditaFavorite, false),
+            Category("6", "Educación", Icons.Default.School, MoneditaEducation, false),
             Category("7", "Ropa", Icons.Default.Checkroom, MoneditaClothing, false),
             Category("8", "Otros", Icons.Default.MoreHoriz, MoneditaTextSecondary, false),
             Category("9", "Salario", Icons.Default.Work, MoneditaAvailableGreen, true),
-            Category("10", "Inversiones", Icons.Default.TrendingUp, Color(0xFF4DB6AC), true)
+            Category("10", "Inversiones", Icons.Default.TrendingUp, MoneditaInvestments, true)
         )
     }
 
     val currentList = categories.filter {
         it.isIncome == (selectedTab == 1)
     }
+
+    // ===================== SCAFFOLD COMPARTIDO =====================
     Scaffold(
-        containerColor = MoneditaBackground,
+        containerColor = Color.White,
+
         bottomBar = {
             MoneditaBottomNavigation(
                 selectedItem = selectedItem,
@@ -71,81 +82,15 @@ fun main_Categories(
                 onItemClick = onItemClick,
                 onMoreClick = onMoreClick
             )
-        }
-    ) { innerPadding ->
+        },
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-                .padding(innerPadding)
-        ) {
-
-            // Encabezado
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFFEF08A)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("😊", fontSize = 18.sp)
-                    }
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Text(
-                        text = "TU MONEDITA",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MoneditaTextSecondary,
-                        letterSpacing = 0.5.sp
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFE2E8F0)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        Icons.Default.Person,
-                        contentDescription = "Perfil",
-                        tint = MoneditaTextSecondary,
-                        modifier = Modifier.size(22.dp)
-                    )
-                }
-            }
-
-            // Título y botón agregar
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Categorías",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MoneditaTextStrong
-                )
-
+        floatingActionButton = {
+            if (currentScreen == CategoryScreen.MAIN) {
                 FloatingActionButton(
-                    onClick = onAddClick,
-                    modifier = Modifier.size(44.dp),
-                    containerColor = MoneditaPrimary,
+                    onClick = {
+                        currentScreen = CategoryScreen.CREATE
+                    },
+                    containerColor = MoneditaAccent,
                     contentColor = Color.White,
                     shape = CircleShape
                 ) {
@@ -155,68 +100,167 @@ fun main_Categories(
                     )
                 }
             }
+        }
 
-            Spacer(modifier = Modifier.height(20.dp))
+    ) { innerPadding ->
 
-            // Selector Gastos e Ingresos
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .height(48.dp)
-                    .clip(RoundedCornerShape(50.dp))
-                    .background(MoneditaSearchBackground),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                listOf("Gastos", "Ingresos").forEachIndexed { index, title ->
-                    Box(
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .background(Color.White)
+        ) {
+
+            when (currentScreen) {
+
+                // ===================== PANTALLA PRINCIPAL =====================
+                CategoryScreen.MAIN -> {
+
+                    Column(
                         modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight()
-                            .clip(RoundedCornerShape(50.dp))
-                            .background(
-                                if (selectedTab == index) MoneditaPrimary
-                                else Color.Transparent
-                            )
-                            .clickable {
-                                selectedTab = index
-                            },
-                        contentAlignment = Alignment.Center
+                            .fillMaxSize()
+                            .background(Color.White)
                     ) {
+
+                        // Encabezado
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp, vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            MoneditaHeader(expression = MoneditaExpression.WINK)
+
+                            Box(
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .clip(CircleShape)
+                                    .background(Color(0xFFE2E8F0)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Default.Person,
+                                    contentDescription = "Perfil",
+                                    tint = MoneditaTextSecondary,
+                                    modifier = Modifier.size(22.dp)
+                                )
+                            }
+                        }
+
+                        // Título
                         Text(
-                            text = title,
-                            color = if (selectedTab == index) Color.White
-                            else MoneditaTextSecondary,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 14.sp
+                            text = "Categorías",
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MoneditaTextStrong,
+                            modifier = Modifier.padding(horizontal = 20.dp)
                         )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        // Selector Gastos e Ingresos
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp)
+                                .height(48.dp)
+                                .clip(RoundedCornerShape(50.dp))
+                                .background(MoneditaSearchBackground),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            listOf("Gastos", "Ingresos").forEachIndexed { index, title ->
+                                Box(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxHeight()
+                                        .clip(RoundedCornerShape(50.dp))
+                                        .background(
+                                            if (selectedTab == index)
+                                                if (title == "Gastos") MoneditaExpenseRed
+                                                else MoneditaAvailableGreen
+                                            else Color.Transparent
+                                        )
+                                        .clickable {
+                                            selectedTab = index
+                                        },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = title,
+                                        color = if (selectedTab == index) Color.White
+                                        else MoneditaTextSecondary,
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 14.sp
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Lista de categorías
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .weight(1f),
+                            contentPadding = PaddingValues(
+                                horizontal = 20.dp,
+                                vertical = 8.dp
+                            ),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            items(currentList, key = { it.id }) { category ->
+                                CategoryListItem(
+                                    category = category,
+                                    onClick = {
+                                        selectedCategory = category
+                                        currentScreen = CategoryScreen.EDIT
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Lista de categorías
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(
-                    horizontal = 20.dp,
-                    vertical = 8.dp
-                ),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(currentList, key = { it.id }) { category ->
-                    CategoryListItem(
-                        category = category,
-                        onClick = {
-                            onCategoryClick(category)
+                // ===================== CREAR CATEGORÍA =====================
+                CategoryScreen.CREATE -> {
+                    AddCategoryScreen(
+                        onBackClick = {
+                            currentScreen = CategoryScreen.MAIN
+                        },
+                        onSaveClick = { name, isIncome ->
+                            // Aquí posteriormente guardas la nueva categoría
+                            currentScreen = CategoryScreen.MAIN
                         }
                     )
+                }
+
+                // ===================== EDITAR CATEGORÍA =====================
+                CategoryScreen.EDIT -> {
+                    selectedCategory?.let { category ->
+                        EditCategoryScreen(
+                            category = category,
+                            onBackClick = {
+                                currentScreen = CategoryScreen.MAIN
+                            },
+                            onSaveClick = { name, isIncome ->
+                                // Aquí posteriormente actualizas la categoría
+                                currentScreen = CategoryScreen.MAIN
+                            },
+                            onDeleteClick = {
+                                // Aquí posteriormente eliminas la categoría
+                                currentScreen = CategoryScreen.MAIN
+                                selectedCategory = null
+                            }
+                        )
+                    }
                 }
             }
         }
     }
 }
+
 
 @Composable
 private fun CategoryListItem(
@@ -273,4 +317,11 @@ private fun CategoryListItem(
             )
         }
     }
+}
+
+
+private enum class CategoryScreen {
+    MAIN,
+    CREATE,
+    EDIT
 }

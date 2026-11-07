@@ -33,11 +33,21 @@ fun ExpensesByCategoryScreen(
     onCategoryClick: (String) -> Unit = {}
 ) {
     val categories = listOf(
-        ExpenseCategoryReport("Comida", "\$2,975.00", 35, Color(0xFFE57373)),
-        ExpenseCategoryReport("Transporte", "\$1,700.00", 20, Color(0xFFFFB74D)),
-        ExpenseCategoryReport("Vivienda", "\$1,275.00", 15, Color(0xFF64B5F6)),
-        ExpenseCategoryReport("Entretenimiento", "\$850.00", 10, Color(0xFFBA68C8)),
-        ExpenseCategoryReport("Otros", "\$1,700.00", 20, Color(0xFF90A4AE))
+        ExpenseCategoryReport(
+            "Comida", "$2,975.00", 35, Color(0xFFE57373)
+        ),
+        ExpenseCategoryReport(
+            "Transporte", "$1,700.00", 20, Color(0xFFFFB74D)
+        ),
+        ExpenseCategoryReport(
+            "Vivienda", "$1,275.00", 15, Color(0xFF64B5F6)
+        ),
+        ExpenseCategoryReport(
+            "Entretenimiento", "$850.00", 10, Color(0xFFBA68C8)
+        ),
+        ExpenseCategoryReport(
+            "Otros", "$1,700.00", 20, Color(0xFF90A4AE)
+        )
     )
 
     Column(
@@ -46,12 +56,14 @@ fun ExpensesByCategoryScreen(
             .background(Color.White)
             .padding(20.dp)
     ) {
+
+        // Encabezado
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBackClick) {
                 Icon(
-                    Icons.Default.ArrowBack,
+                    imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Regresar",
                     tint = MoneditaTextStrong
                 )
@@ -67,6 +79,7 @@ fun ExpensesByCategoryScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        // Total de gastos
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
@@ -84,7 +97,7 @@ fun ExpensesByCategoryScreen(
                 )
 
                 Text(
-                    text = "\$8,500.00",
+                    text = "$8,500.00",
                     color = MoneditaTextStrong,
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
@@ -114,13 +127,13 @@ fun ExpensesByCategoryScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(categories) { category ->
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(14.dp))
                         .background(MoneditaSearchBackground)
-                        .clickable
-                         {
+                        .clickable {
                             onCategoryClick(category.name)
                         }
                         .padding(14.dp)
@@ -153,6 +166,7 @@ fun ExpensesByCategoryScreen(
 
                     Spacer(modifier = Modifier.height(10.dp))
 
+                    // Barra de porcentaje
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -162,7 +176,9 @@ fun ExpensesByCategoryScreen(
                     ) {
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth(category.percentage / 100f)
+                                .fillMaxWidth(
+                                    category.percentage / 100f
+                                )
                                 .fillMaxHeight()
                                 .clip(CircleShape)
                                 .background(category.color)

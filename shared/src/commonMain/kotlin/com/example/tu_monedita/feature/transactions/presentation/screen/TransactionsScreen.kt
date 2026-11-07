@@ -1,4 +1,5 @@
 ﻿package com.example.tu_monedita.feature.transactions.presentation.screen
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,6 +23,9 @@ import androidx.compose.ui.unit.sp
 import com.example.tu_monedita.core.components.NavigationOption
 import com.example.tu_monedita.core.designsystem.theme.*
 import com.example.tu_monedita.core.components.MoneditaBottomNavigation
+import com.example.tu_monedita.core.designsystem.component.MoneditaHeader
+import com.example.tu_monedita.core.designsystem.images.MoneditaExpression
+
 
 data class TransactionItem(
     val id: String,
@@ -33,6 +37,7 @@ data class TransactionItem(
     val icon: ImageVector,
     val iconBgColor: Color
 )
+
 private fun formatAmount(amount: Double, decimals: Int = 0): String {
     val factor = if (decimals == 2) 100L else 1L
     val rounded = kotlin.math.round(amount * factor).toLong()
@@ -53,6 +58,7 @@ private fun formatAmount(amount: Double, decimals: Int = 0): String {
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun main_Transaction(
@@ -65,6 +71,11 @@ fun main_Transaction(
     onFilterClick: () -> Unit = {},
     onBottomNavClick: (Int) -> Unit = {}
 ) {
+
+    // ===================== ESTADOS DE NAVEGACIÓN =====================
+    var currentScreen by remember { mutableStateOf(TransactionScreen.MAIN) }
+    var selectedTransaction by remember { mutableStateOf<TransactionItem?>(null) }
+
     val transactions = remember {
         listOf(
             TransactionItem(
@@ -85,7 +96,8 @@ fun main_Transaction(
                 amount = 320.00,
                 isIncome = false,
                 icon = Icons.Default.Restaurant,
-                iconBgColor = Color(0xFFA81919)            ),
+                iconBgColor = MoneditaFood
+            ),
             TransactionItem(
                 id = "3",
                 title = "Renta",
@@ -93,8 +105,8 @@ fun main_Transaction(
                 date = "10 nov 2024 · 09:00",
                 amount = 900.00,
                 isIncome = false,
-                icon = Icons.Default.Checkroom,
-                iconBgColor = Color(0xFF7C3AED)
+                icon = Icons.Default.Home,
+                iconBgColor = MoneditaRent
             ),
             TransactionItem(
                 id = "4",
@@ -104,7 +116,7 @@ fun main_Transaction(
                 amount = 120.00,
                 isIncome = false,
                 icon = Icons.Default.DirectionsBus,
-                iconBgColor = Color(0xFF16A34A)
+                iconBgColor = MoneditaTransport
             ),
             TransactionItem(
                 id = "5",
@@ -122,8 +134,10 @@ fun main_Transaction(
     var searchQuery by remember { mutableStateOf("") }
     var showFilter by remember { mutableStateOf(false) }
 
+    // ===================== SCAFFOLD COMPARTIDO =====================
     Scaffold(
-        containerColor = MoneditaBackground,
+        containerColor = Color.White,
+
         bottomBar = {
             MoneditaBottomNavigation(
                 selectedItem = selectedItem,
@@ -131,269 +145,347 @@ fun main_Transaction(
                 onItemClick = onItemClick,
                 onMoreClick = onMoreClick
             )
+        },
+
+        floatingActionButton = {
+            if (currentScreen == TransactionScreen.MAIN) {
+                FloatingActionButton(
+                    onClick = {
+                        currentScreen = TransactionScreen.CREATE
+                    },
+                    containerColor = MoneditaAccent,
+                    contentColor = Color.White,
+                    shape = CircleShape
+                ) {
+                    Icon(
+                        Icons.Default.Add,
+                        contentDescription = "Crear movimiento"
+                    )
+                }
+            }
         }
-    )  { paddingValues ->
-        Column(
+
+    ) { innerPadding ->
+
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(innerPadding)
                 .background(Color.White)
         ) {
-            // Header
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
+
+            when (currentScreen) {
+
+                // ===================== PANTALLA PRINCIPAL =====================
+                TransactionScreen.MAIN -> {
+
+                    Column(
                         modifier = Modifier
-                            .size(32.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFFEF08A)),
-                        contentAlignment = Alignment.Center
+                            .fillMaxSize()
+                            .background(Color.White)
                     ) {
-                        Text("😊", fontSize = 18.sp)
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "TU MONEDITA",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MoneditaTextSecondary,
-                        letterSpacing = 0.5.sp
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFE2E8F0)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        Icons.Default.Person,
-                        contentDescription = "Perfil",
-                        tint = MoneditaTextSecondary,
-                        modifier = Modifier.size(22.dp)
-                    )
-                }
-            }
-
-            // Título
-            Text(
-                text = "Movimientos",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = MoneditaTextStrong,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Card Balance del mes
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = MoneditaDarkBlue)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp)
-                ) {
-                    Text(
-                        text = "Balance del mes",
-                        color = Color.White.copy(alpha = 0.85f),
-                        fontSize = 14.sp
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "$840.00",
-                        color = Color.White,
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        // Ingresos
-                        Card(
-                            modifier = Modifier.weight(1f),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White)
+                        // Header
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp, vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Column(
-                                modifier = Modifier.padding(12.dp)
+                            MoneditaHeader(expression = MoneditaExpression.SAD)
+                            Box(
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .clip(CircleShape)
+                                    .background(Color(0xFFE2E8F0)),
+                                contentAlignment = Alignment.Center
                             ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(
-                                        Icons.Default.ArrowUpward,
-                                        contentDescription = null,
-                                        tint = MoneditaAvailableGreen,
-                                        modifier = Modifier.size(16.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(4.dp))
-                                    Text(
-                                        text = "Ingresos",
-                                        fontSize = 12.sp,
-                                        color = MoneditaTextSecondary
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = "$2,500.00",
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MoneditaTextStrong
+                                Icon(
+                                    Icons.Default.Person,
+                                    contentDescription = "Perfil",
+                                    tint = MoneditaTextSecondary,
+                                    modifier = Modifier.size(22.dp)
                                 )
                             }
                         }
-                        // Gastos
-                        Card(
-                            modifier = Modifier.weight(1f),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White)
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(12.dp)
-                            ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(
-                                        Icons.Default.ArrowDownward,
-                                        contentDescription = null,
-                                        tint = MoneditaExpenseRed,
-                                        modifier = Modifier.size(16.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(4.dp))
-                                    Text(
-                                        text = "Gastos",
-                                        fontSize = 12.sp,
-                                        color = MoneditaTextSecondary
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = "$1,660.00",
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MoneditaTextStrong
-                                )
-                            }
-                        }
-                    }
-                }
-            }
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Barra de búsqueda
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    modifier = Modifier.weight(1f),
-                    placeholder = {
+                        // Título
                         Text(
-                            "Buscar movimiento...",
-                            color = MoneditaTextSecondary,
-                            fontSize = 14.sp
+                            text = "Movimientos",
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MoneditaTextStrong,
+                            modifier = Modifier.padding(horizontal = 20.dp)
                         )
-                    },
-                    leadingIcon = {
-                        Icon(
-                            Icons.Default.Search,
-                            contentDescription = null,
-                            tint = MoneditaTextSecondary
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Card Balance del mes
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = CardDefaults.cardColors(containerColor = MoneditaDarkBlue)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(20.dp)
+                            ) {
+                                Text(
+                                    text = "Balance del mes",
+                                    color = Color.White.copy(alpha = 0.85f),
+                                    fontSize = 14.sp
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = "$840.00",
+                                    color = Color.White,
+                                    fontSize = 32.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                                ) {
+                                    // Ingresos
+                                    Card(
+                                        modifier = Modifier.weight(1f),
+                                        shape = RoundedCornerShape(12.dp),
+                                        colors = CardDefaults.cardColors(containerColor = Color.White)
+                                    ) {
+                                        Column(
+                                            modifier = Modifier.padding(12.dp)
+                                        ) {
+                                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                                Icon(
+                                                    Icons.Default.ArrowUpward,
+                                                    contentDescription = null,
+                                                    tint = MoneditaAvailableGreen,
+                                                    modifier = Modifier.size(16.dp)
+                                                )
+                                                Spacer(modifier = Modifier.width(4.dp))
+                                                Text(
+                                                    text = "Ingresos",
+                                                    fontSize = 12.sp,
+                                                    color = MoneditaTextSecondary
+                                                )
+                                            }
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                            Text(
+                                                text = "$2,500.00",
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = MoneditaTextStrong
+                                            )
+                                        }
+                                    }
+                                    // Gastos
+                                    Card(
+                                        modifier = Modifier.weight(1f),
+                                        shape = RoundedCornerShape(12.dp),
+                                        colors = CardDefaults.cardColors(containerColor = Color.White)
+                                    ) {
+                                        Column(
+                                            modifier = Modifier.padding(12.dp)
+                                        ) {
+                                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                                Icon(
+                                                    Icons.Default.ArrowDownward,
+                                                    contentDescription = null,
+                                                    tint = MoneditaExpenseRed,
+                                                    modifier = Modifier.size(16.dp)
+                                                )
+                                                Spacer(modifier = Modifier.width(4.dp))
+                                                Text(
+                                                    text = "Gastos",
+                                                    fontSize = 12.sp,
+                                                    color = MoneditaTextSecondary
+                                                )
+                                            }
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                            Text(
+                                                text = "$1,660.00",
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = MoneditaTextStrong
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        // Barra de búsqueda
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = searchQuery,
+                                onValueChange = { searchQuery = it },
+                                modifier = Modifier.weight(1f),
+                                placeholder = {
+                                    Text(
+                                        "Buscar movimiento...",
+                                        color = MoneditaTextSecondary,
+                                        fontSize = 14.sp
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Default.Search,
+                                        contentDescription = null,
+                                        tint = MoneditaTextSecondary
+                                    )
+                                },
+                                shape = RoundedCornerShape(24.dp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = Color.Transparent,
+                                    unfocusedBorderColor = Color.Transparent,
+                                    focusedContainerColor = MoneditaSearchBackground,
+                                    unfocusedContainerColor = MoneditaSearchBackground
+                                ),
+                                singleLine = true
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .clip(CircleShape)
+                                    .background(MoneditaSearchBackground)
+                                    .clickable {
+                                        showFilter = true
+                                    },
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Default.Tune,
+                                    contentDescription = "Filtros",
+                                    tint = MoneditaTextSecondary
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Lista de movimientos
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .weight(1f),
+                            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            items(transactions) { transaction ->
+                                TransactionListItem(
+                                    transaction = transaction,
+                                    onClick = {
+                                        selectedTransaction = transaction
+                                        currentScreen = TransactionScreen.DETAILS
+                                    }
+                                )
+                            }
+                        }
+                    }
+
+                    // Modal de filtros (solo se muestra en MAIN)
+                    if (showFilter) {
+                        ModalBottomSheet(
+                            onDismissRequest = { showFilter = false },
+                            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+                            containerColor = Color.White,
+                            shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
+                        ) {
+                            TransactionScreen5(
+                                onDismiss = { showFilter = false },
+                                onApply = { type, category, from, to ->
+                                    // Aquí aplicarás los filtros reales
+                                    showFilter = false
+                                },
+                                onClearFilters = {
+                                    // Aquí puedes limpiar filtros
+                                }
+                            )
+                        }
+                    }
+                }
+
+                // ===================== DETALLE =====================
+                TransactionScreen.DETAILS -> {
+                    selectedTransaction?.let { transaction ->
+                        detail_Transaction(
+                            title = transaction.title,
+                            subtitle = transaction.subtitle,
+                            amount = transaction.amount,
+                            isIncome = transaction.isIncome,
+                            category = transaction.subtitle, // puedes ajustar según tu modelo
+                            date = transaction.date,
+                            description = transaction.subtitle,
+                            createdAt = transaction.date,
+                            lastModified = transaction.date,
+                            onBackClick = {
+                                currentScreen = TransactionScreen.MAIN
+                            },
+                            onEditClick = {
+                                currentScreen = TransactionScreen.EDIT
+                            },
+                            onDeleteClick = {
+                                // Aquí podrías eliminar el movimiento
+                                currentScreen = TransactionScreen.MAIN
+                                selectedTransaction = null
+                            }
                         )
-                    },
-                    shape = RoundedCornerShape(24.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color.Transparent,
-                        unfocusedBorderColor = Color.Transparent,
-                        focusedContainerColor = MoneditaSearchBackground,
-                        unfocusedContainerColor = MoneditaSearchBackground
-                    ),
-                    singleLine = true
-                )
-                Box(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(MoneditaSearchBackground)
-                        .clickable {
-                            showFilter = true
-                            onFilterClick()
+                    }
+                }
+
+                // ===================== CREAR =====================
+                TransactionScreen.CREATE -> {
+                    create_Transaction(
+                        onBackClick = {
+                            currentScreen = TransactionScreen.MAIN
                         },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        Icons.Default.Tune,
-                        contentDescription = "Filtros",
-                        tint = MoneditaTextSecondary
+                        onSaveClick = { type, category, amount, description, date ->
+                            // Aquí guardarías el nuevo movimiento
+                            currentScreen = TransactionScreen.MAIN
+                        }
                     )
                 }
-            }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Lista de movimientos
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                items(transactions) { transaction ->
-                    TransactionListItem(
-                        transaction = transaction,
-                        onClick = { onTransactionClick(transaction) }
-                    )
+                // ===================== EDITAR =====================
+                TransactionScreen.EDIT -> {
+                    selectedTransaction?.let { transaction ->
+                        edit_Transaction(
+                            initialIsIncome = transaction.isIncome,
+                            initialCategory = transaction.subtitle,
+                            initialAmount = formatAmount(transaction.amount, 2),
+                            initialDescription = transaction.subtitle,
+                            initialDate = transaction.date,
+                            onBackClick = {
+                                currentScreen = TransactionScreen.DETAILS
+                            },
+                            onSaveClick = { type, category, amount, description, date ->
+                                // Aquí actualizarías el movimiento
+                                currentScreen = TransactionScreen.DETAILS
+                            },
+                            onDeleteClick = {
+                                currentScreen = TransactionScreen.MAIN
+                                selectedTransaction = null
+                            }
+                        )
+                    }
                 }
             }
-        }
-    }
-    // Modal de filtros
-    if (showFilter) {
-        ModalBottomSheet(
-            onDismissRequest = {
-                showFilter = false
-            },
-            sheetState = rememberModalBottomSheetState(
-                skipPartiallyExpanded = true
-            ),
-            containerColor = Color.White,
-            shape = RoundedCornerShape(
-                topStart = 24.dp,
-                topEnd = 24.dp
-            )
-        ) {
-            TransactionScreen5(
-                onDismiss = {
-                    showFilter = false
-                },
-                onApply = { type, category, from, to ->
-                    // Aquí aplicarás los filtros a los movimientos
-                    showFilter = false
-                },
-                onClearFilters = {
-                    // Aquí puedes restablecer los filtros
-                }
-            )
         }
     }
 }
+
 
 @Composable
 private fun TransactionListItem(
@@ -448,5 +540,12 @@ private fun TransactionListItem(
             color = if (transaction.isIncome) MoneditaAvailableGreen else MoneditaExpenseRed
         )
     }
+}
 
+
+private enum class TransactionScreen {
+    MAIN,
+    DETAILS,
+    CREATE,
+    EDIT
 }

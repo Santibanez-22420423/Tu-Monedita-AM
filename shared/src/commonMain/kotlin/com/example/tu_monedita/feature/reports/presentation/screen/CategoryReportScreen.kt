@@ -32,7 +32,7 @@ fun CategoryReportScreen(
         ) {
             IconButton(onClick = onBackClick) {
                 Icon(
-                    Icons.Default.ArrowBack,
+                    imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Regresar",
                     tint = MoneditaTextStrong
                 )
@@ -86,7 +86,7 @@ fun CategoryReportScreen(
                 )
 
                 Text(
-                    text = "\$2,975.00",
+                    text = "$2,975.00",
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     color = MoneditaExpenseRed
@@ -117,7 +117,7 @@ fun CategoryReportScreen(
 
         ReportDetailRow(
             title = "Promedio por movimiento",
-            value = "\$247.92"
+            value = "$247.92"
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -164,5 +164,7 @@ private fun ReportDetailRow(
         )
     }
 
-    HorizontalDivider(color = MoneditaSearchBackground)
+    HorizontalDivider(
+        color = MoneditaSearchBackground
+    )
 }

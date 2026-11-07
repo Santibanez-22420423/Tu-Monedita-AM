@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.MaterialTheme
 import com.example.tu_monedita.core.designsystem.theme.*
+import androidx.compose.material.icons.filled.Edit
+
 data class BudgetMovement(
     val title: String,
     val date: String,
@@ -329,6 +331,33 @@ fun Details_Budgets(
             }
 
             Spacer(modifier = Modifier.height(24.dp))
+            // Botón para editar presupuesto
+            Button(
+                onClick = onEditClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MoneditaPrimary,
+                    contentColor = Color.White
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = null
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = "Editar presupuesto",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
