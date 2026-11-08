@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.tu_monedita.core.components.MoneditaBottomNavigation
 import com.example.tu_monedita.core.components.NavigationOption
 import com.example.tu_monedita.core.designsystem.theme.*
+import com.example.tu_monedita.core.designsystem.theme.*
 
 private data class HomeTransaction(
     val id: String,
@@ -200,31 +201,31 @@ fun HomeScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         HomeLegendItem(
-                            color = Color(0xFFC5992E),
+                            color = MoneditaFood,
                             name = "Comida",
                             percent = "35%"
                         )
 
                         HomeLegendItem(
-                            color = Color(0xFF78909C),
+                            color = MoneditaTransport,
                             name = "Transporte",
                             percent = "20%"
                         )
 
                         HomeLegendItem(
-                            color = Color(0xFF9575CD),
+                            color = MoneditaRent,
                             name = "Vivienda",
                             percent = "15%"
                         )
 
                         HomeLegendItem(
-                            color = Color(0xFF64B5F6),
-                            name = "Entretenimiento",
+                            color = MoneditaClothing,
+                            name = "Ropa",
                             percent = "10%"
                         )
 
                         HomeLegendItem(
-                            color = Color(0xFFBDBDBD),
+                            color = MoneditaBorderGray,
                             name = "Otros",
                             percent = "20%"
                         )
@@ -426,7 +427,7 @@ private fun HomeDonutChart(
         val strokeWidth = size.minDimension * 0.25f
 
         drawArc(
-            color = Color(0xFFC5992E),
+            color = MoneditaFood,
             startAngle = -90f,
             sweepAngle = 126f,
             useCenter = false,
@@ -434,7 +435,7 @@ private fun HomeDonutChart(
         )
 
         drawArc(
-            color = Color(0xFF78909C),
+            color = MoneditaTransport,
             startAngle = 36f,
             sweepAngle = 72f,
             useCenter = false,
@@ -442,7 +443,7 @@ private fun HomeDonutChart(
         )
 
         drawArc(
-            color = Color(0xFF9575CD),
+            color = MoneditaRent,
             startAngle = 108f,
             sweepAngle = 54f,
             useCenter = false,
@@ -450,7 +451,7 @@ private fun HomeDonutChart(
         )
 
         drawArc(
-            color = Color(0xFF64B5F6),
+            color = MoneditaClothing,
             startAngle = 162f,
             sweepAngle = 36f,
             useCenter = false,
@@ -458,7 +459,7 @@ private fun HomeDonutChart(
         )
 
         drawArc(
-            color = Color(0xFFBDBDBD),
+            color = MoneditaBorderGray,
             startAngle = 198f,
             sweepAngle = 72f,
             useCenter = false,
