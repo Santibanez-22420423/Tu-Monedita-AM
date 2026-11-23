@@ -1,0 +1,18 @@
+CREATE TABLE TransactionEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    amount REAL NOT NULL,
+    description TEXT NOT NULL,
+    categoryId TEXT NOT NULL,
+    date INTEGER NOT NULL,
+    type TEXT NOT NULL
+);
+
+getAllTransactions:
+SELECT * FROM TransactionEntity ORDER BY date DESC;
+
+insertTransaction:
+INSERT OR REPLACE INTO TransactionEntity(id, amount, description, categoryId, date, type)
+VALUES (?, ?, ?, ?, ?, ?);
+
+deleteTransaction:
+DELETE FROM TransactionEntity WHERE id = ?;
